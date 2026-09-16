@@ -1,0 +1,145 @@
+erDiagram
+
+    API_KEY {
+        bigint api_key_id PK
+        varchar name
+        varchar key_prefix
+        varchar key_hash
+        boolean is_active
+        datetime expires_at
+        datetime last_used_at
+        datetime created_at
+        datetime revoked_at
+    }
+
+    EMAIL_TEMPLATE {
+        bigint template_id PK
+        varchar template_key UK
+        varchar name
+        varchar description
+        varchar subject_template
+        text html_body
+        text text_body
+        varchar status
+        int current_version
+        datetime created_at
+        datetime updated_at
+    }
+
+    TEMPLATE_VERSION {
+        bigint version_id PK
+        bigint template_id FK
+        int version_number
+        varchar subject_template
+        text html_body
+        text text_body
+        varchar change_description
+        boolean is_active
+        datetime created_at
+        bigint created_by
+    }
+
+    TEMPLATE_VARIABLE {
+        bigint variable_id PK
+        bigint template_id FK
+        varchar variable_key
+        varchar display_name
+        varchar data_type
+        boolean is_required
+        varchar default_value
+        varchar description
+        datetime created_at
+    }
+
+    EMAIL_PROVIDER {
+        bigint provider_id PK
+        varchar provider_type
+        varchar provider_name
+        json configuration
+        boolean is_default
+        boolean is_active
+        datetime created_at
+        datetime updated_at
+    }
+
+    EMAIL {
+        bigint email_id PK
+        bigint template_id FK
+        bigint version_id FK
+        bigint provider_id FK
+        varchar message_id
+        varchar status
+        varchar subject
+        varchar from_email
+        varchar from_name
+        varchar reply_to
+        int retry_count
+        int max_retries
+        datetime next_retry_at
+        text last_error
+        datetime queued_at
+        datetime processing_at
+        datetime sent_at
+        datetime created_at
+    }
+
+    EMAIL_RECIPIENT {
+        bigint recipient_id PK
+        bigint email_id FK
+        varchar email
+        varchar recipient_type
+        varchar status
+        datetime delivered_at
+        datetime opened_at
+        datetime clicked_at
+    }
+
+    EMAIL_ATTACHMENT {
+        bigint attachment_id PK
+        bigint email_id FK
+        varchar file_name
+        varchar content_type
+        bigint file_size
+        varchar storage_type
+        varchar storage_path
+        datetime created_at
+    }
+
+    EMAIL_EVENT {
+        bigint event_id PK
+        bigint email_id FK
+        bigint recipient_id FK
+        varchar event_type
+        text event_data
+        datetime occurred_at
+    }
+
+    EMAIL_LOG {
+        bigint log_id PK
+        bigint email_id FK
+        varchar level
+        varchar message
+        text details
+        datetime created_at
+    }
+
+
+    EMAIL_TEMPLATE ||--o{ TEMPLATE_VERSION : "has"
+
+    EMAIL_TEMPLATE ||--o{ TEMPLATE_VARIABLE : "defines"
+
+    EMAIL_TEMPLATE ||--o{ EMAIL : "used for"
+
+    TEMPLATE_VERSION ||--o{ EMAIL : "renders"
+
+    EMAIL_PROVIDER ||--o{ EMAIL : "sends"
+
+    EMAIL ||--o{ EMAIL_RECIPIENT : "has"
+
+    EMAIL ||--o{ EMAIL_ATTACHMENT : "contains"
+
+    EMAIL ||--o{ EMAIL_EVENT : "generates"
+
+    EMAIL_RECIPIENT ||--o{ EMAIL_EVENT : "generates"
+
+    EMAIL ||--o{ EMAIL_LOG : "produces"

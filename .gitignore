@@ -1,0 +1,17 @@
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+
+# Build results
+bin/
+obj/
+TestResults/
+*.user
+*.suo
+.vs/
+.idea/
+.vscode/
+
+# Runtime storage
+storage/
