@@ -21,13 +21,13 @@ if (mailjetConfig is not null && !mailjetConfig.SkipStartupValidation)
 {
     var errors = new List<string>();
     if (string.IsNullOrWhiteSpace(mailjetConfig.ApiKey))
-        errors.Add("MAILJET_API_KEY is missing.");
+        errors.Add("MAILJET__APIKEY is missing.");
     if (string.IsNullOrWhiteSpace(mailjetConfig.SecretKey))
-        errors.Add("MAILJET_SECRET_KEY is missing.");
+        errors.Add("MAILJET__SECRETKEY is missing.");
     if (errors.Count > 0)
         throw new InvalidOperationException(
             $"Missing required Mailjet configuration:\n{string.Join("\n", errors)}\n" +
-            "Set MAILJET_SKIP_STARTUP_VALIDATION=true to bypass this check.");
+            "Set MAILJET__SKIPSTARTUPVALIDATION=true to bypass this check.");
 }
 
 builder.Services.AddEmailManagementInfrastructure(builder.Configuration);
