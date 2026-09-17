@@ -47,16 +47,16 @@ cp .env.example .env
 | Variable | Description |
 |---|---|
 | `DATABASE_CONNECTION_STRING` | MySQL connection string |
-| `MAILJET_API_KEY` | Mailjet API key |
-| `MAILJET_SECRET_KEY` | Mailjet secret key |
+| `MAILJET__APIKEY` | Mailjet API key |
+| `MAILJET__SECRETKEY` | Mailjet secret key |
 
 ### Optional
 
 | Variable | Default | Description |
 |---|---|---|
-| `MAILJET_FROM_EMAIL` | — | Default sender email address |
-| `MAILJET_FROM_NAME` | — | Default sender display name |
-| `MAILJET_SKIP_STARTUP_VALIDATION` | `false` | Skip Mailjet credential validation on startup |
+| `MAILJET__FROMEMAIL` | — | Default sender email address |
+| `MAILJET__FROMNAME` | — | Default sender display name |
+| `MAILJET__SKIPSTARTUPVALIDATION` | `false` | Skip Mailjet credential validation on startup |
 | `API_KEY_BOOTSTRAP` | `false` | Generate a bootstrap API key on first run (printed once to console) |
 | `STORAGE_PATH` | `<app>/storage` | Local file storage path for attachments |
 | `RateLimiting__SendPermitLimit` | `100` | Send endpoint rate limit (requests per window) |
