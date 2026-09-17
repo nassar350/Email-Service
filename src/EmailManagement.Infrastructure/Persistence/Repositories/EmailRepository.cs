@@ -87,13 +87,15 @@ public class EmailRepository : IEmailRepository
         return affected > 0;
     }
 
-    public async Task AddAsync(Email email, CancellationToken ct = default)
+    public Task AddAsync(Email email, CancellationToken ct = default)
     {
         _db.Emails.Add(email);
+        return Task.CompletedTask;
     }
 
-    public async Task UpdateAsync(Email email, CancellationToken ct = default)
+    public Task UpdateAsync(Email email, CancellationToken ct = default)
     {
         _db.Emails.Update(email);
+        return Task.CompletedTask;
     }
 }

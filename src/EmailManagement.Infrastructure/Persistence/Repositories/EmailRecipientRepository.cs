@@ -11,9 +11,10 @@ public class EmailRecipientRepository : IEmailRecipientRepository
 
     public EmailRecipientRepository(ApplicationDbContext db) => _db = db;
 
-    public async Task AddRangeAsync(IEnumerable<EmailRecipient> recipients, CancellationToken ct = default)
+    public Task AddRangeAsync(IEnumerable<EmailRecipient> recipients, CancellationToken ct = default)
     {
         _db.EmailRecipients.AddRange(recipients);
+        return Task.CompletedTask;
     }
 
     public async Task<IReadOnlyList<EmailRecipient>> GetByEmailAsync(Guid emailId, CancellationToken ct = default) =>
@@ -22,8 +23,9 @@ public class EmailRecipientRepository : IEmailRecipientRepository
     public async Task<EmailRecipient?> GetByEmailAndAddressAsync(Guid emailId, string email, CancellationToken ct = default) =>
         await _db.EmailRecipients.FirstOrDefaultAsync(x => x.EmailId == emailId && x.Email == email, ct);
 
-    public async Task UpdateAsync(EmailRecipient recipient, CancellationToken ct = default)
+    public Task UpdateAsync(EmailRecipient recipient, CancellationToken ct = default)
     {
         _db.EmailRecipients.Update(recipient);
+        return Task.CompletedTask;
     }
 }

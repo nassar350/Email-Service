@@ -20,13 +20,15 @@ public class EmailEventRepository : IEmailEventRepository
             .Where(x => x.EmailId == emailId)
             .OrderByDescending(x => x.OccurredAt).ToListAsync(ct);
 
-    public async Task AddAsync(EmailEvent emailEvent, CancellationToken ct = default)
+    public Task AddAsync(EmailEvent emailEvent, CancellationToken ct = default)
     {
         _db.EmailEvents.Add(emailEvent);
+        return Task.CompletedTask;
     }
 
-    public async Task AddRangeAsync(IEnumerable<EmailEvent> events, CancellationToken ct = default)
+    public Task AddRangeAsync(IEnumerable<EmailEvent> events, CancellationToken ct = default)
     {
         _db.EmailEvents.AddRange(events);
+        return Task.CompletedTask;
     }
 }

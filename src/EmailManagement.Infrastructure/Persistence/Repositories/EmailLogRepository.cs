@@ -16,8 +16,9 @@ public class EmailLogRepository : IEmailLogRepository
             .Where(x => x.EmailId == emailId)
             .OrderByDescending(x => x.CreatedAt).ToListAsync(ct);
 
-    public async Task AddAsync(EmailLog log, CancellationToken ct = default)
+    public Task AddAsync(EmailLog log, CancellationToken ct = default)
     {
         _db.EmailLogs.Add(log);
+        return Task.CompletedTask;
     }
 }
